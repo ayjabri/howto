@@ -1,0 +1,10 @@
+You can join both datasets in one then create a DataLoader as follows:
+1- create both training and validation sets:
+    trainset_t = datasets.KMNIST('./data/KMNIST/224',train=True, download=True, transform=tfms_tt)
+
+    valset_t = datasets.KMNIST('./data/KMNIST/224',train=False, download=True, transform=tfms_tv)
+2- Join them using ConcatDataset:
+     joinset = torch.utils.data.ConcatDataset((trainset,valset))
+     
+3- Create the joint dataloader from the new set
+    joinloader = torch.utils.data.DataLoader(joinset,batch_size=10,shuffle=True,num_workers=2)

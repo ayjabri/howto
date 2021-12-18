@@ -1,0 +1,31 @@
+Steps to install Visual Studio Code (VSC) onto Remote Server (google Cloud)
+
+1- initiate glcoud: 
+	In terminal run: gcloud init
+	Make sure the correct username, region and project are entered
+2- ssh into google cloud vm:
+	gcloud compute ssh --zone "ZONE" "INSTANCE_NAME" --project "PROJECT_ID"
+	gcloud compute ssh --zone "us-east4-b" "dl-cheap-vm" --project "metal-map-278701"
+
+	#Make sure the region is correct -- always a problem
+
+3- install ssh extension on local vsc - if needed
+4- add the instance in vsc:
+	ssh -i ~/.ssh/google_compute_engine username@IP_address
+5- install vsc on the remote machine:
+	sudo apt update
+	sudo apt install snapd
+	sudo snap install code --classic
+
+	Verify installation by downloading a dummy package
+		sudo snap install hello-world
+	Note: might need to restart the instance. Then run 'code'
+
+6- install kite prerequisites:
+	sudo apt-get update -y
+	sudo apt-get install -y xdg-utils
+
+7- install kite:
+	bash -c "$(wget -q -O - https://linux.kite.com/dls/linux/current)"
+
+From VSC add the instance IP address to .ssh config file and enjoy!

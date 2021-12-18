@@ -1,0 +1,76 @@
+Add 1920x1080 resolution to VirtualBox (Ubuntu):
+In terminal
+1- Run "xrandr" to get a list of available displays (monitors) and their resolutions
+	aa@vb20:~$ xrandr
+	Screen 0: minimum 1 x 1, current 1680 x 1050, maximum 8192 x 8192
+	Virtual1 connected primary 1680x1050+0+0 (normal left inverted right x axis y axis) 0mm x 0mm
+	   800x600       60.00 +  60.32  
+	   2560x1600     59.99  
+	   1920x1440     60.00  
+	   1856x1392     60.00  
+	   1792x1344     60.00  
+	   1920x1200     59.88  
+	   1600x1200     60.00  
+	   1680x1050     59.95* 
+	   1400x1050     59.98  
+	   1280x1024     60.02  
+	   1440x900      59.89  
+	   1280x960      60.00  
+	   1360x768      60.02  
+	   1280x800      59.81  
+	   1152x864      75.00  
+	   1280x768      59.87  
+	   1024x768      60.00  
+	   640x480       59.94  
+2- Run "cvt 1920 1080" to find the clock assiciated with the desired resolution:
+	aa@vb20:~$ cvt 1920 1080
+	# 1920x1080 59.96 Hz (CVT 2.07M9) hsync: 67.16 kHz; pclk: 173.00 MHz
+	Modeline "1920x1080_60.00"  173.00  1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
+3- Create new mode with its frequencey:
+    $ xrandr --newmode "1920x1080_60.00"  173.00  1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
+4- Add the new mode to Virtual1 display:
+	aa@vb20:~$ xrandr --addmode Virtual1 "1920x1080_60.00"
+
+Then change display from settings or run in terminal:
+$ xrandr --output DP-1 --mode 1680x1050
+
+https://www.tecmint.com/set-display-screen-resolution-in-ubuntu/
+
+
+# First we need to get the modeline string for xrandr
+# Luckily, the tool "gtf" will help you calculate it.
+# All you have to do is to pass the resolution & the-
+# refresh-rate as the command parameters:
+gtf 1920 1080 60
+
+# In this case, the horizontal resolution is 1920px the
+# vertical resolution is 1080px & refresh-rate is 60Hz.
+# IMPORTANT: BE SURE THE MONITOR SUPPORTS THE RESOLUTION
+
+# Typically, it outputs a line starting with "Modeline"
+# e.g. "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
+# Copy this entire string (except for the starting "Modeline")
+
+# Now, use "xrandr" to make the system recognize a new
+# display mode. Pass the copied string as the parameter
+# to the --newmode option:
+xrandr --newmode "1920x1080_60.00"  172.80  1920 2040 2248 2576  1080 1081 1084 1118  -HSync +Vsync
+
+# Well, the string within the quotes is the nick/alias
+# of the display mode - you can as well pass something
+# as "MyAwesomeHDResolution". But, careful! :-|
+
+# Then all you have to do is to add the new mode to the
+# display you want to apply, like this:
+xrandr --addmode VGA1 "1920x1080_60.00"
+
+# VGA1 is the display name, it might differ for you.
+# Run "xrandr" without any parameters to be sure.
+# The last parameter is the mode-alias/name which
+# you've set in the previous command (--newmode)
+
+# It should add the new mode to the display & apply it.
+# Usually unlikely, but if it doesn't apply automatically
+# then force it with this command:
+xrandr --output VGA1 --mode "1920x1080_60.00"
+

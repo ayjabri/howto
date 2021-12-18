@@ -1,0 +1,22 @@
+# Predictions:
+
+To predict a batch value y for an input tensor x of size (100,3,224,224) for example:
+1- torch.no_grad()
+2- y_ht = net(x)
+3- p = torch.softmax(y_hat)
+4- to get the index of the max probability, pass:
+    a. either y_hat.argmax(dim=1, keepdim=True) ------ you can either apply it to 'y_hat' or 'p'. yield the same results
+    b. OR torch.argmax(p,dim=1)
+
+if the final layer doesn't have an activation funtion we can user torch.softmax to generate a probability of outcomes (it produces 0-1 probabilities)
+
+LIST OF ALL PREDICTIONS WITH COMPARISON TO Y_HAT:
+
+ALL_P = [[p.argmax(dim=1)==y_hat, p.argmax(dim=1)]] #generates a list with True/False in the firs column and loc of it in the second column
+#The prbability value itself can be extracted by applying max function on the softmaxed tensor 'p'
+prob = p.max(dim=1,keepdim=True) -> returns a tuple with (values,indicies)
+prob[0] --> values or prbabilities
+
+Note: you can add other columns such as y_hat,p..etc for comparison
+
+

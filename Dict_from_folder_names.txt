@@ -1,0 +1,28 @@
+import numpy as np
+from glob import glob
+import os
+
+path = ('/Users/aymanjabri/notebooks/Artwork/data/images/images')
+
+x = glob(path+'/**/*')
+
+#extract directory names and save them into a list
+c = [os.path.basename(os.path.dirname(i)) for i in x]
+
+#create a dictionary list from directory names and a sequence values
+keys = np.unique(c)
+values = np.arange(0,50)
+class_to_idx = dict(zip(keys,values))
+
+
+### 3 ways to create a dictionary from a list:
+
+#using pandas
+my_dict1 = pd.DataFrame(artists,columns=['artist'])
+my_dict1 = my_dict1.artist.to_dict()
+
+#by zipping it with range
+my_dict2 = dict(zip(range(len(artists)),artists))
+
+#looping 
+my_dict3 = {i:artists[i] for i in range(len(artists))}

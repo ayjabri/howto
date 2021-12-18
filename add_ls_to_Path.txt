@@ -1,0 +1,21 @@
+To add .ls() to Path object:
+
+from pathlib import Path
+from os import listdir as ls
+Path.ls = ls
+
+now each path object created using Path command will have an ls() attribute that returns:
+['Adaptive Learning Rate .ipynb',
+ 'confusion matrix',
+ 'CustomDataLoader_Transform',
+ 'list_file_names.ipynb',
+ 'UnNormalize.ipynb',
+ 'Join_train_test.txt',
+ '.ipynb_checkpoints']
+ 
+ Anotehr approach is by adding list(path.iterdir()):
+ 
+ [PosixPath('Artwork/data/images/images/Piet_Mondrian'),
+ PosixPath('Artwork/data/images/images/Diego_Velazquez'),
+ PosixPath('Artwork/data/images/images/Edgar_Degas'),
+ PosixPath('Artwork/data/images/images/Georges_Seurat'),
