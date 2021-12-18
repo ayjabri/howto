@@ -1,0 +1,20 @@
+"""
+Steps to Cynthonize a Function
+------------------------------
+
+Math only Functions:
+
+1- write the function in a .pyx file
+2- Run this file from terminal using
+        $python setup.py build_ext --inplace
+    This should generate a '.C' version of the file and a `build` directory
+    
+3- Rename the `.pyx` file just so the python scrip doens't confuse it with the C one
+4- import the function in your main.py and use it
+
+
+Numpy Functions:
+In addition to the steps above you need to add the numpy directory path
+ in setup file. (see example setup_np.py)
+
+"""
